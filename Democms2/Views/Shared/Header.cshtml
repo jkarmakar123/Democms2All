@@ -1,0 +1,88 @@
+@using EPiServer.Core
+@using Democms2.Services
+@using Democms2.Models.ViewModels
+@using EPiServer.Globalization
+
+@inject INavService NavigationService
+@inject EPiServer.DataAbstraction.ILanguageBranchRepository LanguageBranchRepository
+@inject UrlResolver UrlResolver
+@inject IContentLoader ContentLoader
+@* @inject ILocalizationService LocalizationService *@
+
+@{
+    ContentReference currentPageLink = ContentReference.StartPage;
+
+    if (Model is PageData pageData)
+    {
+        currentPageLink = pageData.ContentLink;
+    }
+    else if (Model != null)
+    {
+        var currentPageProperty = Model.GetType().GetProperty("CurrentPage");
+        if (currentPageProperty?.GetValue(Model) is PageData currentPage)
+        {
+            currentPageLink = currentPage.ContentLink;
+        }
+    }
+
+    var menuItems = NavigationService.GetMainNavigation(ContentReference.StartPage, currentPageLink);
+
+    //for language switcher
+
+    var enabledLanguages = LanguageBranchRepository.ListEnabled();
+
+    var currentContentLink = currentPageLink;
+    //for home page name
+
+    var startPage = ContentLoader.Get<HomePage>(ContentReference.StartPage);
+
+    var homeUrl = UrlResolver.GetUrl(startPage.ContentLink);
+
+    var siteName = startPage.PageTitle ?? startPage?.Name;
+}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark site-header">
+    <div class="container m-0">
+        @* <a class="navbar-brand" href="/">Smart Knowledge Hub</a> *@
+
+        <a class="navbar-brand" href="@homeUrl">
+            @siteName
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
+                aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="mainMenu">
+            <ul class="navbar-nav me-auto flex-row flex-wrap align-items-center gap-2">
+                @await Html.PartialAsync("_NavItems", menuItems)
+            </ul>
+        </div>
+
+    </div>
+    <div class="dropdown ms-auto">
+        <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown">
+            @ContentLanguage.PreferredCulture.TwoLetterISOLanguageName.ToUpper()
+        </button>
+
+        <ul class="dropdown-menu dropdown-menu-end">
+            @foreach (var language in enabledLanguages)
+            {
+                var url = UrlResolver.GetUrl(
+                    currentContentLink,
+                    language.LanguageID
+                );
+
+                <li>
+                    <a class="dropdown-item" href="@url">
+                        @language.Name
+                    </a>
+                </li>
+            }
+
+              
+        </ul>
+
+    </div>
+</nav>

@@ -1,0 +1,33 @@
+@model KnowledgeArticlePage
+@using EPiServer.Web.Mvc.Html
+
+<div class="article-card">
+
+    <a href="@Url.ContentUrl(Model.ContentLink)">
+
+        @if (Model.ThumbnailImage != null)
+        {
+            <img src="@Url.ContentUrl(Model.ThumbnailImage)" 
+                 alt="@Model.ArticleTitle" class="article-thumb" />
+        }
+
+        <div class="article-content">
+
+            <h3>@Model.ArticleTitle</h3>
+
+            <p>@Model.Summary</p>
+
+            <div class="meta">
+                <span>@Model.ArticleCategory</span>
+                <span>@Model.Author</span>
+                <span>@Model.PublishedDate.ToString("dd MMM yyyy")</span>
+                <span>@Model.ReadTimeMinutes min read</span>
+            </div>
+
+            <span class="read-more">Read More →</span>
+
+        </div>
+
+    </a>
+
+</div>

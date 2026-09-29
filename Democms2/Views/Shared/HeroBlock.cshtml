@@ -1,0 +1,21 @@
+@using EPiServer.Web.Mvc.Html
+@model HeroBlock
+@{
+    var bgStyle = Model.BackgroundImage != null
+        ? $"background-image: url('{Url.ContentUrl(Model.BackgroundImage)}');"
+        : "";
+}
+
+<div class="hero-banner" style="@bgStyle">
+    <div class="hero-banner__content">
+        <h1 class="hero-banner__heading" epi-property="@Model.Heading">@Model.Heading</h1>
+        <p class="hero-banner__text" epi-property="@Model.SubText">@Model.SubText</p>
+
+        @if (!string.IsNullOrWhiteSpace(Model.CTAButtonText) && Model.CTAButtonLink != null)
+        {
+            <a class="hero-banner__cta" epi-property="@Model.CTAButtonLink" href="@Url.ContentUrl(Model.CTAButtonLink)">
+                @Model.CTAButtonText
+            </a>
+        }
+    </div>
+</div>

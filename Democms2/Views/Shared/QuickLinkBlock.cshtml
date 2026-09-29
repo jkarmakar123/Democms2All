@@ -1,0 +1,20 @@
+@model QuickLinkBlock
+
+<a class="quick-link-card" href="@Url.ContentUrl(Model.LinkUrl)">
+    @* <div class="quick-link-icon">
+        <i class="@Model.IconClass"></i>
+    </div> *@
+
+    <div class="quick-link-content">
+        <h3 class="quick-link-title">
+            @Model.LinkTitle
+        </h3>
+
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="quick-link-desc">
+                @Model.Description
+            </p>
+        }
+    </div>
+</a>

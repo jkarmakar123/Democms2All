@@ -1,0 +1,22 @@
+@model PromoBlock
+
+@{
+    var bgClass = Model.BackgroundColor?.ToLower() ?? "gray";
+}
+
+<div class="promo-block promo-@bgClass">
+    <div class="promo-content">
+        <h2 class="promo-title">@Model.Title</h2>
+
+        <div class="promo-body">
+            @Html.PropertyFor(x => x.Body)
+        </div>
+
+        @if (!string.IsNullOrWhiteSpace(Model.CTAText) && Model.CTALink != null)
+        {
+            <a class="promo-cta" href="@Url.ContentUrl(Model.CTALink)">
+                @Model.CTAText
+            </a>
+        }
+    </div>
+</div>

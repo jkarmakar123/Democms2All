@@ -1,0 +1,40 @@
+@using Democms2.Models.Pages
+@using EPiServer.Web.Mvc.Html
+@using EPiServer.Core
+
+@using EPiServer.Framework.Localization
+@* @inject ILocalizationService LocalizationService *@
+
+@model HomePageViewModel
+@* @inject EPiServer.Framework.Localization. LocalizationService *@
+@* <div class="start">
+    <div epi-property="@Model.HeroArea" class="row">
+        <div epi-property-item class="block" epi-on-item-rendered="OnItemRendered" />
+    </div>
+</div> *@
+
+<div class="hero-area">
+    @Html.PropertyFor(x => x.CurrentPage.HeroArea)
+</div>
+
+
+
+@* <div class="hero-area">
+    @Model.CurrentPage.PageTitle
+</div> *@
+
+<section class="featured-articles">
+    <h2>@LocalizationService.Current.GetString("/views/labels/featuredarticles")</h2>
+    <div class="article-grid">
+
+    @foreach (var article in Model.FeaturedArticlesPages)
+    {
+        @await Html.PartialAsync("ArticleCard", article)
+    }
+    </div>
+</section>
+
+<section class="quick-links">
+    <h2>Quick Links</h2>
+    @Html.PropertyFor(x => x.CurrentPage.QuickLinksArea,new { CssClass = "article-grid" })
+</section>

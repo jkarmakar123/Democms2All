@@ -1,0 +1,114 @@
+@* @model Democms2.Models.Pages.ResourcePage
+
+@using EPiServer.Core
+@using EPiServer.Web.Mvc.Html
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <span class="badge bg-primary mb-3">
+                @Html.PropertyFor(x => x.ResourceCategory)
+            </span>
+
+            <h1 class="mb-3">
+                @Html.PropertyFor(x => x.ResourceTitle)
+            </h1>
+
+            <div class="text-muted mb-4">
+                @Html.PropertyFor(x => x.PublishedDate)
+            </div>
+
+            @if (!ContentReference.IsNullOrEmpty(Model.ThumbnailImage))
+            {
+                <div class="mb-4">
+                    <img src="@Url.ContentUrl(Model.ThumbnailImage)"
+                         alt="@Model.ResourceTitle"
+                         class="img-fluid rounded shadow-sm w-100" />
+                </div>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(Model.Description))
+            {
+                <div class="lead mb-4">
+                    @Html.PropertyFor(x => x.Description)
+                </div>
+            }
+
+            @if (!ContentReference.IsNullOrEmpty(Model.ResourceFile))
+            {
+                <div class="mb-4">
+                    <a href="@Url.ContentUrl(Model.ResourceFile)"
+                       class="btn btn-primary"
+                       download>
+                        Download Resource
+                    </a>
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div> *@
+
+@model Democms2.Models.Pages.ResourcePage
+
+@using EPiServer.Core
+@using EPiServer.Web.Mvc.Html
+
+<article class="resource-page">
+
+    <header class="resource-page__header">
+
+        <span class="resource-page__category">
+            @Html.PropertyFor(x => x.ResourceCategory)
+        </span>
+
+        <h1 class="resource-page__title">
+            @Html.PropertyFor(x => x.ResourceTitle)
+        </h1>
+
+        <div class="resource-page__meta">
+
+            <span>
+                @Html.PropertyFor(x => x.PublishedDate)
+            </span>
+
+        </div>
+
+    </header>
+
+    @if (!ContentReference.IsNullOrEmpty(Model.ThumbnailImage))
+    {
+        <div class="resource-page__image">
+
+            <img src="@Url.ContentUrl(Model.ThumbnailImage)"
+                 alt="@Model.ResourceTitle" />
+
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.Description))
+    {
+        <div class="resource-page__summary">
+            @Html.PropertyFor(x => x.Description)
+        </div>
+    }
+
+    @if (!ContentReference.IsNullOrEmpty(Model.ResourceFile))
+    {
+        <div class="resource-page__download">
+
+            <a href="@Url.ContentUrl(Model.ResourceFile)"
+               class="btn btn-primary"
+               download>
+                Download Resource
+            </a>
+
+        </div>
+    }
+
+</article>

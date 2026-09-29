@@ -1,0 +1,134 @@
+@model KnowledgeBasePageViewModel
+
+<section class="p-4">
+
+<h1>
+    @Html.PropertyFor(x => x.CurrentPage.PageTitle)
+</h1>
+
+<p>
+    @Html.PropertyFor(x => x.CurrentPage.IntroText)
+</p>
+
+
+
+<form method="get" class="article-filters">
+
+    <div class="article-filters__field">
+        <label class="article-filters__label" for="tag">Tags</label>
+
+        <select class="article-filters__select" id="tag" name="tag">
+            <option value="">All tags</option>
+
+            @foreach (var tag in Model.AvailableTags)
+            {
+                if (string.Equals(Model.SelectedTag, tag, StringComparison.OrdinalIgnoreCase))
+                {
+                    <option value="@tag" selected>@tag</option>
+                }
+                else
+                {
+                    <option value="@tag">@tag</option>
+                }
+            }
+        </select>
+    </div>
+
+    <div class="article-filters__field">
+        <label class="article-filters__label" for="articleCategory">Category</label>
+
+        <select class="article-filters__select" id="articleCategory" name="articleCategory">
+            <option value="">All categories</option>
+
+            @foreach (var category in Model.AvailableArticleCategories)
+            {
+                if (string.Equals(Model.SelectedArticleCategory, category, StringComparison.OrdinalIgnoreCase))
+                {
+                    <option value="@category" selected>@category</option>
+                }
+                else
+                {
+                    <option value="@category">@category</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button type="submit" class="article-filters__button">
+        Apply Filters
+    </button>
+
+    @if (!string.IsNullOrWhiteSpace(Model.SelectedTag) ||
+         !string.IsNullOrWhiteSpace(Model.SelectedArticleCategory))
+    {
+        <a href="@Url.ContentUrl(Model.CurrentPage.ContentLink)"
+           class="article-filters__clear">
+            Clear Filters
+        </a>
+    }
+</form>
+
+<div class="article-grid">
+
+    @if (Model.Articles.Any())
+    {
+        foreach (KnowledgeArticlePage article in Model.Articles)
+        {
+            @await Html.PartialAsync("ArticleCard", article)
+        }
+    }
+    else
+    {
+        <p>No articles match the selected filters.</p>
+    }
+
+</div>
+
+@* @if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a asp-route-page="@i"
+               asp-route-tag="@Model.SelectedTag"
+               asp-route-articleCategory="@Model.SelectedArticleCategory">@i</a>
+        }
+
+    </div>
+} *@
+
+@{
+    string BuildQueryString(int page, string? tag, string? category)
+    {
+        var parts = new List<string> { $"page={page}" };
+        
+        @* if (!string.IsNullOrWhiteSpace(tag)) Uri.EscapeDataString(tag) *@
+            parts.Add($"tag={tag}");
+        
+        @* if (!string.IsNullOrWhiteSpace(category)) *@
+            parts.Add($"articleCategory={category}");
+        
+        return "?" + string.Join("&", parts);
+    }
+}
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            var queryString = BuildQueryString(i, Model.SelectedTag, Model.SelectedArticleCategory);
+            var isCurrentPage = i == Model.CurrentPageNumber;
+            
+            <a href="@queryString" 
+               class="pagination-link @(isCurrentPage ? "active" : "")">
+                @i
+            </a>
+        }
+    </div>
+}
+
+
+
+</section>

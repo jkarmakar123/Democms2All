@@ -1,0 +1,62 @@
+# .NET build outputs
+[Oo]bj/
+[Bb]in/
+**/[Bb]in/
+**/[Oo]bj/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.pdb
+*.cache
+*.log
+*.aps
+*.ncb
+*.opendb
+*.VC.db
+*.VC.VC.opendb
+*.dbmdl
+*.jfm
+
+# NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.assets.json
+*.nuget.props
+*.nuget.targets
+
+# Test results / coverage
+TestResults/
+*.trx
+coverage/
+*.coverage
+*.coveragexml
+
+# ASP.NET / CMS content
+**/App_Data/*.mdf
+**/App_Data/*.ldf
+**/App_Data/blobs/**
+**/App_Data/**/*.db
+**/App_Data/**/*.sqlite
+
+# Rider / JetBrains
+.idea/
+*.sln.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# ReSharper / tools
+_ReSharper.Caches/
+*.DotSettings.user
+
+# Build generated files
+*.generated.cs
+*.g.cs

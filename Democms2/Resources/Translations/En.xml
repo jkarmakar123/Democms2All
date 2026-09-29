@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="English" id="en">
+  <contenttypes>
+      <homepage>
+        <properties>
+          <featuredarticles>
+            <caption>Featured Articles</caption>
+          </featuredarticles>
+        </properties>
+      </homepage>
+    </contenttypes>
+     <views>
+            <labels>
+                <featuredarticles>Featured Articles</featuredarticles>
+            </labels>
+        </views>
+  </language>
+</languages>

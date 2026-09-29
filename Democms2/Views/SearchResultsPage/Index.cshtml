@@ -1,0 +1,96 @@
+@using System.Linq
+@model SearchResultsViewModel
+
+@{
+    var pageTitle = string.IsNullOrWhiteSpace(Model.CurrentPage?.PageTitle)
+        ? "Search Results"
+        : Model.CurrentPage.PageTitle;
+
+    var noResultsText = string.IsNullOrWhiteSpace(Model.CurrentPage?.NoResultsText)
+        ? "No results found."
+        : Model.CurrentPage.NoResultsText;
+}
+
+<section class="search-page">
+
+    <header class="search-page__hero">
+       
+
+        <h1 class="search-page__title">
+            @pageTitle
+        </h1>
+
+        <p class="search-page__intro">
+            Search articles, resources, and other pages across the site.
+        </p>
+
+        <form method="get" class="search-page__form" role="search">
+            <label class="sr-only" for="q">Search</label>
+
+            <input id="q"
+                   name="q"
+                   type="search"
+                   value="@Model.Query"
+                   placeholder="Type keywords like onboarding, PDF, guide..."
+                   autocomplete="off" />
+
+            <button type="submit">
+                Search
+            </button>
+        </form>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Query))
+    {
+        <div class="search-page__summary">
+            <strong>@Model.TotalResults</strong>
+            result@(Model.TotalResults == 1 ? "" : "s") for
+            <strong>@Model.Query</strong>
+        </div>
+    }
+
+    @if (Model.Results?.Any() == true)
+    {
+        <div class="search-results-grid">
+            @foreach (var result in Model.Results)
+            {
+                <article class="search-result-card">
+                    <div class="search-result-card__meta">
+                        <span class="search-result-card__type">
+                            @result.ContentType
+                        </span>
+
+                        <time datetime="@result.PublishedDate.ToString("yyyy-MM-dd")">
+                            @result.PublishedDate.ToString("dd MMM yyyy")
+                        </time>
+                    </div>
+
+                    <h2 class="search-result-card__title">
+                        <a href="@result.Url">
+                            @result.Title
+                        </a>
+                    </h2>
+
+                    @if (!string.IsNullOrWhiteSpace(result.Summary))
+                    {
+                        <p class="search-result-card__summary">
+                            @result.Summary
+                        </p>
+                    }
+
+                    <a class="search-result-card__link" href="@result.Url">
+                        Read more
+                    </a>
+                </article>
+            }
+        </div>
+    }
+    else if (!string.IsNullOrWhiteSpace(Model.Query))
+    {
+        <div class="search-page__empty">
+            <h2>No results found</h2>
+            <p>@noResultsText</p>
+        </div>
+    }
+
+</section>

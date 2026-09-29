@@ -1,0 +1,55 @@
+@using EPiServer.Core
+@using Democms2.Services
+@using Democms2.Models.ViewModels
+
+@inject INavService NavigationService
+
+@{
+    ContentReference currentPageLink = ContentReference.StartPage;
+
+    if (Model is PageData pageData)
+    {
+        currentPageLink = pageData.ContentLink;
+    }
+    else if (Model != null)
+    {
+        var currentPageProperty = Model.GetType().GetProperty("CurrentPage");
+        if (currentPageProperty?.GetValue(Model) is PageData currentPage)
+        {
+            currentPageLink = currentPage.ContentLink;
+        }
+    }
+
+     // Don't show breadcrumb on Home Page
+    if (currentPageLink.CompareToIgnoreWorkID(ContentReference.StartPage))
+    {
+        return;
+    }
+
+    var breadcrumbItems = NavigationService.GetBreadcrumb(currentPageLink);
+}
+
+@if (breadcrumbItems.Any())
+{
+    <nav aria-label="breadcrumb" class="border-bottom bg-light">
+        <div class="container m-0">
+            <ol class="breadcrumb mb-0 py-2">
+                @for (var i = 0; i < breadcrumbItems.Count; i++)
+                {
+                    var item = breadcrumbItems[i];
+
+                    if (i == breadcrumbItems.Count - 1)
+                    {
+                        <li class="breadcrumb-item active" aria-current="page">@item.Title</li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item">
+                            <a href="@item.Url">@item.Title</a>
+                        </li>
+                    }
+                }
+            </ol>
+        </div>
+    </nav>
+}

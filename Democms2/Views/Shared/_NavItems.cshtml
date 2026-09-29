@@ -1,0 +1,22 @@
+@model IEnumerable<Democms2.Models.ViewModels.NavItemViewModel>
+
+@foreach (var item in Model)
+{
+    <li class="nav-item d-flex align-items-center flex-wrap me-3">
+        <a class="nav-link @(item.IsActive ? "active" : "")" href="@item.Url">
+            @item.Title
+        </a>
+
+        @if (item.Children?.Any() == true)
+        {
+            <div class="d-flex align-items-center flex-wrap ms-3 gap-3">
+                @foreach (var child in item.Children)
+                {
+                    <a class="nav-link @(child.IsActive ? "active" : "")" href="@child.Url">
+                        @child.Title
+                    </a>
+                }
+            </div>
+        }
+    </li>
+}

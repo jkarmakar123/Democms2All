@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../Democms2.Tests/Democms2.Tests.csproj" Id="26813a11-8ee5-481b-bd18-45cf67422b11" />
+  <Project Path="Democms2.csproj" />
+</Solution>

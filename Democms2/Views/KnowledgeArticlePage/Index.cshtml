@@ -1,0 +1,76 @@
+@model Democms2.Models.Pages.KnowledgeArticlePage
+
+<article class="article-page">
+
+    <header class="article-page__header">
+
+        <span class="article-page__category">
+            @* @Model.ArticleCategory *@
+            @Html.PropertyFor(x => x.ArticleCategory)
+        </span>
+
+        <h1 class="article-page__title">
+            @Html.PropertyFor(x => x.ArticleTitle)
+        </h1>
+
+        <div class="article-page__meta">
+
+            <span>
+                By @Html.PropertyFor(x => x.Author)
+            </span>
+
+            <span>
+                @Html.PropertyFor(x => x.PublishedDate)
+            </span>
+            
+            @* <span class="article-page__date">
+    @Model.PublishedDate.ToString("dd MMM yyyy")
+</span> *@
+
+            <span>
+                @Html.PropertyFor(x => x.ReadTimeMinutes) min read
+            </span>
+
+        </div>
+
+    </header>
+
+    @if (!ContentReference.IsNullOrEmpty(Model.ThumbnailImage))
+    {
+        <div class="article-page__image">
+
+            <img src="@Url.ContentUrl(Model.ThumbnailImage)"
+                 alt="@Model.ArticleTitle" />
+
+        </div>
+    }
+
+    @if (!string.IsNullOrWhiteSpace(Model.Summary))
+    {
+        <div class="article-page__summary">
+            @Html.PropertyFor(x => x.Summary)
+        </div>
+    }
+
+    <div class="article-page__body">
+        @Html.PropertyFor(x => x.Body)
+    </div>
+
+    @if (Model.Tags?.Count > 0)
+    {
+        <div class="article-page__tags">
+            @foreach (var tag in Model.Tags)
+            {
+                if (string.IsNullOrWhiteSpace(tag))
+                {
+                    continue;
+                }
+
+                <span class="article-page__tag">
+                    @tag.Trim()
+                </span>
+            }
+        </div>
+    }
+
+</article>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<languages>
+  <language name="Bengali" id="bn-IN">
+    <contenttypes>
+      <homepage>
+        <properties>
+          <featuredarticles>
+            <caption>বৈশিষ্ট্যযুক্ত নিবন্ধ</caption>
+          </featuredarticles>
+        </properties>
+      </homepage>
+    </contenttypes>
+    <views>
+      <labels>
+        <featuredarticles>বৈশিষ্ট্যযুক্ত নিবন্ধ</featuredarticles>
+      </labels>
+    </views>
+  </language>
+</languages>

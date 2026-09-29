@@ -1,0 +1,33 @@
+@model ResourceLibraryPageViewModel
+
+
+<section class="p-4">
+<h1>
+    @Html.PropertyFor(x => x.CurrentPage.PageTitle)
+</h1>
+
+<p>
+    @Html.PropertyFor(x => x.CurrentPage.IntroText)
+</p>
+
+<div class="article-grid">
+
+    @foreach (ResourcePage resource in Model.Resources)
+    {
+        @await Html.PartialAsync("ResourceCard", resource)
+    }
+
+</div>
+
+@if (Model.TotalPages > 1)
+{
+    <div class="pagination">
+
+        @for (int i = 1; i <= Model.TotalPages; i++)
+        {
+            <a href="?page=@i">@i</a>
+        }
+
+    </div>
+}
+</section>

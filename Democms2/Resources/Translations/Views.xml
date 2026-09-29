@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<module>
+  <languagefiles>
+    <add virtualPath="~/lang/Bn.xml" />
+    <add virtualPath="~/lang/En.xml" />
+  </languagefiles>
+</module>

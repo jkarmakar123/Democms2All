@@ -1,0 +1,13 @@
+@model ContactPage
+
+<div class="contact-container">
+    <h1 class="form-container-title">@Model.PageTitle</h1>
+
+    @Html.PropertyFor(x => x.IntroText)
+
+<div class="form-container">
+
+    @Html.PropertyFor(x => x.MainContentArea)
+</div>
+
+</div>
