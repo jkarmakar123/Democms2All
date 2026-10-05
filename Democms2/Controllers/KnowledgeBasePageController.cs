@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Democms2.Models.Pages;
 using Democms2.Models.SelectionFactories;
 using Democms2.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 
 namespace Democms2.Controllers
@@ -92,6 +93,11 @@ public class KnowledgeBasePageController
             SelectedArticleCategory = selectedArticleCategory
         };
 
+        // Return a ViewResult with its own ViewData copy so callers that reuse the controller instance get an independent model instance.
+        // return new ViewResult
+        // {
+        //     ViewData = new ViewDataDictionary(ViewData) { Model = model }
+        // };
         return View(model);
     }
 }
